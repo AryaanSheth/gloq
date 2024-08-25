@@ -3,6 +3,9 @@
 [![Package Version](https://img.shields.io/hexpm/v/groq_lib)](https://hex.pm/packages/groq_lib)
 [![Hex Docs](https://img.shields.io/badge/hex-docs-ffaff3)](https://hexdocs.pm/groq_lib/)
 
+> [!Note]
+> Library is in its very early stages and not usable. 
+
 ```sh
 gleam add groq_lib
 ```
