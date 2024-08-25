@@ -1,11 +1,8 @@
-import gleam/dynamic
 import gleam/hackney
 import gleam/http
 import gleam/http/request
-import gleam/http/response
 import gleam/io
 import gleam/json
-import gleam/result
 
 // example request from Groq API documentation
 // curl -X POST "https://api.groq.com/openai/v1/chat/completions" \
