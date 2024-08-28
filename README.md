@@ -2,6 +2,7 @@
 
 [![Package Version](https://img.shields.io/hexpm/v/groq_lib)](https://hex.pm/packages/groq_lib)
 [![Hex Docs](https://img.shields.io/badge/hex-docs-ffaff3)](https://hexdocs.pm/groq_lib/)
+![Tests](https://github.com/github/docs/actions/workflows/test.yml/badge.svg)
 
 > [!Note]
 > Library is in its very early stages and not usable. 
