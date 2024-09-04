@@ -5,7 +5,7 @@
 ![Tests](https://github.com/github/docs/actions/workflows/test.yml/badge.svg)
 
 > [!Note]
-> Library is in its very early stages
+> Library is in its very early stages      
 > Feel free to create PR's and Issues
 
 ```sh
