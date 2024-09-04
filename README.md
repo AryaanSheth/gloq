@@ -1,7 +1,7 @@
 # gloq
 
-[![Package Version](https://img.shields.io/hexpm/v/groq_lib)](https://hex.pm/packages/groq_lib)
-[![Hex Docs](https://img.shields.io/badge/hex-docs-ffaff3)](https://hexdocs.pm/groq_lib/)
+[![Package Version](https://img.shields.io/hexpm/v/groq_lib)](https://hex.pm/packages/gloq)
+[![Hex Docs](https://img.shields.io/badge/hex-docs-ffaff3)](https://hexdocs.pm/gloq/)
 ![Tests](https://github.com/github/docs/actions/workflows/test.yml/badge.svg)
 
 > [!Note]
@@ -18,7 +18,7 @@ pub fn main() {
 }
 ```
 
-Further documentation can be found at <https://hexdocs.pm/groq_lib>.
+Further documentation can be found at <https://hex.pm/packages/gloq>.
 
 ## Development
 
