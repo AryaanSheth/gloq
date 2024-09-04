@@ -3,30 +3,44 @@ import dot_env/env
 import gleam/hackney
 import gleam/http
 import gleam/http/request
-import gleam/io
 import gleam/json
 
-pub fn read_env() -> String {
+// dev use
+// loads the .env file and returns the value of the GROQ_API_KEY
+fn read_env(key_name) -> String {
   dot.new()
   |> dot.set_path(".env")
   |> dot.set_debug(True)
   |> dot.load()
 
-  case env.get_string("GROQ_API_KEY") {
+  case env.get_string(key_name) {
     Ok(key) -> key
     Error(e) -> "Key Not Found" <> e
   }
 }
 
-// example request from Groq API documentation
-// curl -X POST "https://api.groq.com/openai/v1/chat/completions" \
-//      -H "Authorization: Bearer $GROQ_API_KEY" \
-//      -H "Content-Type: application/json" \
-//      -d '{"messages": [{"role": "user", "content": "Explain the importance of fast language models"}], "model": "llama3-8b-8192"}'
-pub fn main() {
-  let api_key = read_env()
-
-  // request body
+/// Makes a request to the GroqCloud API for chat completions.
+///
+/// This function sends a POST request to the Groq API endpoint for chat completions.
+/// It constructs the request body with the provided user message and context,
+/// sets the necessary headers including the API key, and handles the response.
+///
+/// Parameters:
+/// - key: String - The API key for authentication with Groq.
+/// - user: String - The role of the message sender (e.g., "user" or "system").
+/// - context: String - The content of the message or prompt.
+/// - model: String - The name of the Groq model to use for the completion.
+///
+/// Returns:
+/// - String - The response body from the API if successful, or an error message if the request fails.
+///
+/// Note: This function uses the hackney HTTP client for making the request.
+pub fn groq_request(
+  key: String,
+  user: String,
+  context: String,
+  model: String,
+) -> String {
   let body =
     json.object([
       #(
@@ -34,26 +48,22 @@ pub fn main() {
         json.array(
           [
             json.object([
-              #("role", json.string("user")),
-              #(
-                "content",
-                json.string("Explain the importance of fast language models"),
-              ),
+              #("role", json.string(user)),
+              #("content", json.string(context)),
             ]),
           ],
           of: fn(x) { x },
         ),
       ),
-      #("model", json.string("llama3-8b-8192")),
+      #("model", json.string(model)),
     ])
 
-  // create request
   let req =
     request.new()
     |> request.set_method(http.Post)
     |> request.set_host("api.groq.com")
     |> request.set_path("/openai/v1/chat/completions")
-    |> request.set_header("Authorization", "Bearer " <> api_key)
+    |> request.set_header("Authorization", "Bearer " <> key)
     |> request.set_header("Content-Type", "application/json")
     |> request.set_body(json.to_string(body))
 
@@ -61,10 +71,10 @@ pub fn main() {
 
   case res {
     Ok(r) -> {
-      io.println("Response:" <> r.body)
+      r.body
     }
     Error(_e) -> {
-      io.println("Error, Request Failed")
+      "Error, Request Failed"
     }
   }
 }
