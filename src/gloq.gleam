@@ -1,8 +1,22 @@
+import dot_env as dot
+import dot_env/env
 import gleam/hackney
 import gleam/http
 import gleam/http/request
 import gleam/io
 import gleam/json
+
+pub fn read_env() -> String {
+  dot.new()
+  |> dot.set_path(".env")
+  |> dot.set_debug(True)
+  |> dot.load()
+
+  case env.get_string("GROQ_API_KEY") {
+    Ok(key) -> key
+    Error(e) -> "Key Not Found" <> e
+  }
+}
 
 // example request from Groq API documentation
 // curl -X POST "https://api.groq.com/openai/v1/chat/completions" \
@@ -10,8 +24,7 @@ import gleam/json
 //      -H "Content-Type: application/json" \
 //      -d '{"messages": [{"role": "user", "content": "Explain the importance of fast language models"}], "model": "llama3-8b-8192"}'
 pub fn main() {
-  let api_key = "YOUR_GROQ_API_KEY"
-  // Replace with your actual API key
+  let api_key = read_env()
 
   // request body
   let body =
