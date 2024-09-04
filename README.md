@@ -14,7 +14,17 @@ gleam add gloq
 import gloq
 
 pub fn main() {
-  // TODO: An example of the project in use
+  let api_key = "abc123"
+
+  let response =
+    gloq.groq_request(
+      api_key,
+      "user",
+      "Explain the importance of fast language models",
+      "llama3-8b-8192",
+    )
+    
+  io.print(response)
 }
 ```
 

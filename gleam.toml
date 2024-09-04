@@ -4,7 +4,7 @@ version = "1.0.0"
 # Fill out these fields if you intend to generate HTML documentation or publish
 # your project to the Hex package manager.
 #
-description = "Gleam API Wrapper to Interface with the GROQ API"
+description = "Gleam API Wrapper to Interface with the GroqCloud API"
 licences = ["Apache-2.0"]
 repository = { type = "github", user = "AryaanSheth", repo = "gloq" }
 # links = [{ title = "Website", href = "https://gleam.run" }]
