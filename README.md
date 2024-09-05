@@ -12,21 +12,20 @@
 gleam add gloq
 ```
 ```gleam
-import gloq
-
 pub fn main() {
-  let api_key = "abc123"
+  let key = "abc123"
 
   let response =
-    gloq.groq_request(
-      api_key,
-      "user",
-      "Explain the importance of fast language models",
-      "llama3-8b-8192",
-    )
-    
+    new_groq_request()
+    |> with_key(key)
+    |> with_context("Explain the importance of fast language models")
+    |> with_user("user")
+    |> with_model("llama3-8b-8192")
+    |> send()
+
   io.print(response)
 }
+
 ```
 
 Further documentation can be found at <https://hex.pm/packages/gloq>.
