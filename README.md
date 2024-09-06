@@ -18,15 +18,16 @@ import gloq
 pub fn main() {
   let key = "abc123"
 
-  let response =
-    gloq.new_groq_request()
-    |> gloq.with_key(key)
-    |> gloq.with_context("Explain the importance of fast language models")
-    |> gloq.with_user("user")
-    |> gloq.with_model("llama3-8b-8192")
-    |> gloq.send()
+  let req = 
+    default_groq_request()
+    |> with_key(key)
+    |> with_user("user")
+    |> with_context("Hello, how are you?")
+    |> with_model("llama3-8b-8192")
+    |> build()
 
-  io.println(response)
+  io.println(req.body)
+
 }
 ```
 
