@@ -52,8 +52,8 @@ pub fn with_model(
   GroqRequestBuilder(..builder, model: model)
 }
 
-/// Sends the request to the GroqCloud API for chat completions.
-pub fn send(builder: GroqRequestBuilder) -> String {
+/// Builds the request body for the GroqCloud API that can be sent using the appropriate HTTP client.
+pub fn build(builder: GroqRequestBuilder) {
   let body =
     json.object([
       #(
@@ -71,7 +71,7 @@ pub fn send(builder: GroqRequestBuilder) -> String {
       #("model", json.string(builder.model)),
     ])
 
-  let req =
+  let request =
     request.new()
     |> request.set_method(http.Post)
     |> request.set_host("api.groq.com")
@@ -79,6 +79,17 @@ pub fn send(builder: GroqRequestBuilder) -> String {
     |> request.set_header("Authorization", "Bearer " <> builder.key)
     |> request.set_header("Content-Type", "application/json")
     |> request.set_body(json.to_string(body))
+
+  request
+}
+
+/// Sends the request to the GroqCloud API for chat completions.
+/// > [!Warning]
+/// > Function is deprecated, send logic is left to consumer
+/// To create a request, use the `build` function and send the request using the appropriate HTTP client of your choice.
+/// Uses the `hackney` HTTP client to send the request, this command is no longer supported.
+pub fn send(builder: GroqRequestBuilder) -> String {
+  let req = build(builder)
 
   let res = hackney.send(req)
 
