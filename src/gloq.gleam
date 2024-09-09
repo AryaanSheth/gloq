@@ -98,3 +98,16 @@ pub fn send(builder: GroqRequestBuilder) -> String {
     Error(_) -> "Error, Request Failed"
   }
 }
+
+/// Builds the request body for the GroqCloud API that can be sent using the appropriate HTTP client.
+pub fn view_models(api_key: String) {
+  let request =
+    request.new()
+    |> request.set_method(http.Get)
+    |> request.set_host("api.groq.com")
+    |> request.set_path("/openai/v1/models")
+    |> request.set_header("Authorization", "Bearer " <> api_key)
+    |> request.set_header("Content-Type", "application/json")
+
+  request
+}
