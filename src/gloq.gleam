@@ -20,7 +20,6 @@ pub type GroqRequestBuilder {
     stop: Option(String),
     stream: Option(Bool),
     temperature: Option(Float),
-    tool_choice: Option(String),
     top_p: Option(Float),
   )
 }
@@ -43,7 +42,6 @@ pub fn default_groq_request() -> GroqRequestBuilder {
     stop: None,
     stream: Some(False),
     temperature: Some(1.0),
-    tool_choice: None,
     top_p: Some(1.0),
   )
 }
@@ -172,17 +170,6 @@ pub fn with_temperature(
   GroqRequestBuilder(..builder, temperature: Some(temperature))
 }
 
-/// Controls which (if any) tool is called by the model. none means the model will not call any tool and instead generates a message.
-///  auto means the model can pick between generating a message or calling one or more tools. required means the model must call one or more tools. 
-/// Specifying a particular tool via {"type": "function", "function": {"name": "my_function"}} forces the model to call that tool. none is the default 
-/// when no tools are present. auto is the default if tools are present.
-pub fn with_tool_choice(
-  builder: GroqRequestBuilder,
-  tool_choice: String,
-) -> GroqRequestBuilder {
-  GroqRequestBuilder(..builder, tool_choice: Some(tool_choice))
-}
-
 /// An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass. 
 /// So 0.1 means only the tokens comprising the top 10% probability mass are considered. We generally recommend altering this or temperature but not both.
 pub fn with_top_p(
@@ -209,18 +196,36 @@ pub fn build(builder: GroqRequestBuilder) {
         ),
       ),
       #("model", json.string(builder.model)),
+      #(
+        "frequency_penalty",
+        json.float(option.unwrap(builder.frequency_penalty, 0.0)),
+      ),
+      #("logprobs", json.bool(option.unwrap(builder.logprobs, False))),
+      #("max_tokens", json.int(option.unwrap(builder.max_tokens, 8192))),
+      // 8192 is the largest accepted value for max_tokens accepted by the API
+      #("n", json.int(option.unwrap(builder.n, 1))),
+      #(
+        "parallel_tool_calls",
+        json.bool(option.unwrap(builder.parallel_tool_calls, True)),
+      ),
+      #(
+        "presence_penalty",
+        json.float(option.unwrap(builder.presence_penalty, 0.0)),
+      ),
+      #("seed", json.int(option.unwrap(builder.seed, 0))),
+      #("stop", json.string(option.unwrap(builder.stop, ""))),
+      #("stream", json.bool(option.unwrap(builder.stream, False))),
+      #("temperature", json.float(option.unwrap(builder.temperature, 1.0))),
+      #("top_p", json.float(option.unwrap(builder.top_p, 1.0))),
     ])
 
-  let request =
-    request.new()
-    |> request.set_method(http.Post)
-    |> request.set_host("api.groq.com")
-    |> request.set_path("/openai/v1/chat/completions")
-    |> request.set_header("Authorization", "Bearer " <> builder.key)
-    |> request.set_header("Content-Type", "application/json")
-    |> request.set_body(json.to_string(body))
-
-  request
+  request.new()
+  |> request.set_method(http.Post)
+  |> request.set_host("api.groq.com")
+  |> request.set_path("/openai/v1/chat/completions")
+  |> request.set_header("Authorization", "Bearer " <> builder.key)
+  |> request.set_header("Content-Type", "application/json")
+  |> request.set_body(json.to_string(body))
 }
 
 /// Sends the request to the GroqCloud API for chat completions.
