@@ -1,26 +1,17 @@
 name = "gloq"
-version = "1.4.2"
+version = "2.0.0"
 
-# Fill out these fields if you intend to generate HTML documentation or publish
-# your project to the Hex package manager.
-#
 description = "Gleam API Wrapper to Interface with the GroqCloud API"
 licences = ["Apache-2.0"]
 repository = { type = "github", user = "AryaanSheth", repo = "gloq" }
-gleam = ">= 0.32.0"
-# links = [{ title = "Website", href = "https://gleam.run" }]
-#
-# For a full reference of all the available options, you can have a look at
-# https://gleam.run/writing-gleam/gleam-toml/. 
+gleam = ">= 1.0.0"
+links = [{ title = "GroqCloud Console", href = "https://console.groq.com" }]
 
 [dependencies]
-gleam_stdlib = "~> 0.34 or ~> 1.0"
+gleam_stdlib = "~> 1.0"
 gleam_http = ">= 3.6.0 and < 4.0.0"
 gleam_json = ">= 2.0.0 and < 3.0.0"
-gleam_httpc = ">= 2.2.0 and < 3.0.0"
 gleam_hackney = ">= 1.2.0 and < 2.0.0"
-dot_env = ">= 1.1.0 and < 2.0.0"
-dotenv = ">= 3.1.0 and < 4.0.0"
 
 [dev-dependencies]
 gleeunit = "~> 1.0"
