@@ -4,13 +4,13 @@ version = "2.0.0"
 description = "Gleam API Wrapper to Interface with the GroqCloud API"
 licences = ["Apache-2.0"]
 repository = { type = "github", user = "AryaanSheth", repo = "gloq" }
-gleam = ">= 1.0.0"
+gleam = ">= 1.5.0"
 links = [{ title = "GroqCloud Console", href = "https://console.groq.com" }]
 
 [dependencies]
 gleam_stdlib = "~> 1.0"
-gleam_http = ">= 3.6.0 and < 4.0.0"
-gleam_json = ">= 2.0.0 and < 3.0.0"
+gleam_http = ">= 4.0.0 and < 5.0.0"
+gleam_json = ">= 3.0.0 and < 4.0.0"
 gleam_hackney = ">= 1.2.0 and < 2.0.0"
 
 [dev-dependencies]

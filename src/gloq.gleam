@@ -336,7 +336,7 @@ pub fn build(builder: GroqRequestBuilder) -> Request(String) {
         json.object([#("type", json.string(fmt))])
       }),
     ]
-    |> list.filter_map(fn(x) { x })
+    |> list.filter_map(fn(x) { option.to_result(x, Nil) })
 
   let required_fields = [
     #("messages", json.array(all_messages, fn(x) { x })),

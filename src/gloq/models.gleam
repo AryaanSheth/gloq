@@ -1,17 +1,15 @@
-/// Constants for all currently available GroqCloud models.
-/// Use these instead of raw strings to avoid typos and get IDE completion.
-///
-/// Example:
-/// ```gleam
-/// import gloq
-/// import gloq/models
-///
-/// gloq.default_groq_request()
-/// |> gloq.with_key(api_key)
-/// |> gloq.with_model(models.llama_3_1_8b_instant)
-/// |> gloq.with_context("Hello!")
-/// |> gloq.build()
-/// ```
+// Constants for all currently available GroqCloud models.
+// Use these instead of raw strings to avoid typos and get IDE completion.
+//
+// Example:
+//   import gloq
+//   import gloq/models
+//
+//   gloq.default_groq_request()
+//   |> gloq.with_key(api_key)
+//   |> gloq.with_model(models.llama_3_1_8b_instant)
+//   |> gloq.with_context("Hello!")
+//   |> gloq.build()
 
 // ── Llama 3.3 ──────────────────────────────────────────────────────────────
 

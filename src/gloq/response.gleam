@@ -119,15 +119,18 @@ fn api_error_decoder() -> decode.Decoder(ApiError) {
 /// Decode a JSON response string into a `ChatCompletion`.
 /// Returns an error if the JSON is malformed or missing required fields.
 pub fn decode(json_string: String) -> Result(ChatCompletion, json.DecodeError) {
-  json.decode(json_string, chat_completion_decoder())
+  json.parse(json_string, chat_completion_decoder())
+}
+
+fn outer_error_decoder() -> decode.Decoder(ApiError) {
+  use error <- decode.field("error", api_error_decoder())
+  decode.success(error)
 }
 
 /// Decode an API error response. Use this when `decode` fails to check
 /// whether the server returned a structured error object.
 pub fn decode_error(json_string: String) -> Result(ApiError, json.DecodeError) {
-  use outer <- decode.field("error", api_error_decoder())
-  decode.success(outer)
-  |> json.decode(json_string, _)
+  json.parse(json_string, outer_error_decoder())
 }
 
 /// Extract the text content from the first choice in a completion.
