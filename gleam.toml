@@ -1,5 +1,5 @@
 name = "gloq"
-version = "2.0.0"
+version = "2.0.1"
 
 description = "Gleam API Wrapper to Interface with the GroqCloud API"
 licences = ["Apache-2.0"]
