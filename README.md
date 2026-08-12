@@ -18,6 +18,10 @@ After adding, run `gleam deps download` if prompted.
 
 ## Quick start
 
+### Default request
+
+The easiest way to send a request is using `default_groq_request`, which provides sensible defaults:
+
 ```gleam
 import gleam/httpc
 import gleam/io
@@ -35,6 +39,32 @@ pub fn main() {
   let assert Ok(completion) = response.decode(res.body)
   io.println(response.content(completion))
 }
+```
+
+### Bare request
+
+Use `new_groq_request` to start from a clean slate with no defaults applied:
+
+```gleam
+gloq.new_groq_request()
+|> gloq.with_key("YOUR_API_KEY")
+|> gloq.with_model("llama-3.1-8b-instant")
+|> gloq.with_context("Hello!")
+|> gloq.build()
+```
+
+### Model list
+
+Retrieve available models or fetch details for a specific one:
+
+```gleam
+import gleam/httpc
+import gloq
+
+let req = gloq.list_models("YOUR_API_KEY")
+
+let assert Ok(res) = req |> httpc.send()
+// Parse `res.body` as JSON to see the model list
 ```
 
 ---
